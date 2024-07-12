@@ -105,7 +105,7 @@ jupyter notebook DataProcessing.ipynb
 
 ### 5.View the report:
 
-The `results` and visualizations can be found in the report directory in a PowerPoint file.
+The report and visualizations can be found in the `report` directory in a PowerPoint file.
 
 
 <a name="References"></a>
