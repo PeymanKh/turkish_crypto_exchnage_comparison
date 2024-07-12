@@ -68,12 +68,44 @@ This Project consists of 3 folders:
 1. ***web_scraper***: This directory houses the Scrapy project. The data_scraper.py file within the spiders folder is crafted to gather real-time data from leading Turkish cryptocurrency exchanges, utilizing bitdegree.org—a website renowned for its cryptocurrency-related information. The scraping operation was carried out on March 14, 2024, at 13:00 (GMT+3). 
 
 2. ***data_analysis***:
-After extracting the data, we copy data.json to the Data Cleaning & Visualization folder for further cleaning and analysis. The `DataProcessing.ipynb` Jupyter Notebook contains steps for processing the data and creating visualizations with pandas, matplotlib, and seaborn libraries, helping us to better understand our data.
+After extracting the data, we copy data.json to the Data data_analysis folder for further cleaning and analysis. The `DataProcessing.ipynb` Jupyter Notebook contains steps for processing the data and creating visualizations with pandas, matplotlib, and seaborn libraries, helping us to better understand our data.
 
 2. ***report***: This folder includes the ultimate visualization of our data in Data Story.pdf. It provides valuable insights into the status of leading cryptocurrency exchanges, market trends, website metrics, and more, aiding in making informed decisions. You can Downalod the final PDF file [here](https://github.com/user-attachments/files/16198328/Main.Presentation.pptx).
 
 <a name="run"></a>
 # 3.  How To Run The Project
+
+### 1. Clone the repo to your local machine:
+First of all, you need to clone the project into your local machine using this command:
+```sh
+git clone https://github.com/PeymanKh/turkish_crypto_exchnage_comparison.git
+cd turkish_crypto_exchange_comparison
+```
+
+### 2. Install the requirements:
+Make sure you have Python installed, then run this command to install required libraries:
+```sh
+pip install -r requirements.txt
+```
+
+### 3. Run the web scraper:
+Navigate to the `web_scraper` directory and run the scraper using Scrapy:
+```sh
+cd web_scraper/bitdegree/spiders
+scrapy crawl data_scraper -O data.json
+```
+
+### 4.Analyze the data:
+Copy `data.json` to the `data_analysis` directory and open the Jupyter notebook in the `data_analysis` directory to clean and analyze the scraped data:
+```sh
+cp web_scraper/bitdegree/spiders/data.json data_analysis/
+cd data_analysis
+jupyter notebook DataProcessing.ipynb
+```
+
+### 5.View the report:
+
+The `results` and visualizations can be found in the report directory in a PowerPoint file.
 
 
 <a name="References"></a>
