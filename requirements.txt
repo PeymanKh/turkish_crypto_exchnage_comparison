@@ -1,0 +1,5 @@
+Scrapy~=2.11.1
+pandas~=2.2.2
+numpy~=2.0.0rc1
+matplotlib~=3.9.0rc2
+itemadapter~=0.8.0

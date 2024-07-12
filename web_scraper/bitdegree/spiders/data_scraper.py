@@ -1,13 +1,37 @@
+"""
+A Scrapy Spider to scrape data from the top 3 Turkish crypto exchanges listed on
+Bitdegree.org.
+
+This spider gathers overall statistics and market data from BtcTurk Pro, Binance,
+and Paribu exchanges. The data includes volume, cryptocurrencies listed, market
+dominance, and market rank for each exchange.
+
+Author: Peyman Kh
+Date: 2024-03-12
+"""
+
+# Import libraries
 import scrapy
 
 
 class DataScraperSpider(scrapy.Spider):
+    """
+    A Scrapy Spider to scrape data from the top 3 Turkish crypto exchanges listed on Bitdegree.org.
+    """
     name = "data_scraper"
     allowed_domains = ["bitdegree.org"]
     start_urls = ["https://www.bitdegree.org/top-crypto-exchanges/btcturk-pro"]
 
-    # BtcTurk statistics
     def parse(self, response):
+        """
+        Parses the main page of BtcTurk Pro exchange to gather overall statistics.
+
+        Args:
+            response (scrapy.http.Response): The response object for the initial URL.
+
+        Yields:
+            scrapy.Request: A request object to follow the first page of BtcTurk Pro markets.
+        """
         btcturk_statics = response.css('div.overall-stats span.stats-value::text').getall()
         btcturk_data = {
             'btcturk_volume': str(btcturk_statics[0]).split(),
@@ -24,6 +48,15 @@ class DataScraperSpider(scrapy.Spider):
                               meta={'btcturk_data': btcturk_data})
 
     def parse_btcturk_asset1(self, response):
+        """
+        Parses the first page of BtcTurk Pro markets and gathers market data.
+
+        Args:
+            response (scrapy.http.Response): The response object for the first page of BtcTurk Pro markets.
+
+        Yields:
+            scrapy.Request: A request object to follow the second page of BtcTurk Pro markets.
+        """
         btcturk_data = response.meta['btcturk_data']
         btcturk_markets = []
         table_btcturk = response.css('div.exchange-currencies-table div.table-wrp table.table tbody tr')
@@ -43,6 +76,15 @@ class DataScraperSpider(scrapy.Spider):
                               meta={'btcturk_data': btcturk_data})
 
     def parse_btcturk_asset2(self, response):
+        """
+        Parses the second page of BtcTurk Pro markets and gathers market data.
+
+        Args:
+            response (scrapy.http.Response): The response object for the second page of BtcTurk Pro markets.
+
+        Yields:
+            scrapy.Request: A request object to follow the third page of BtcTurk Pro markets.
+        """
         btcturk_data = response.meta['btcturk_data']
         btcturk_markets = []
         table_btcturk = response.css('div.exchange-currencies-table div.table-wrp table.table tbody tr')
@@ -62,6 +104,15 @@ class DataScraperSpider(scrapy.Spider):
                               meta={'btcturk_data': btcturk_data})
 
     def parse_btcturk_asset3(self, response):
+        """
+        Parses the third page of BtcTurk Pro markets and gathers market data.
+
+        Args:
+            response (scrapy.http.Response): The response object for the third page of BtcTurk Pro markets.
+
+        Yields:
+            scrapy.Request: A request object to follow the fourth page of BtcTurk Pro markets.
+        """
         btcturk_data = response.meta['btcturk_data']
         btcturk_markets = []
         table_btcturk = response.css('div.exchange-currencies-table div.table-wrp table.table tbody tr')
@@ -81,6 +132,15 @@ class DataScraperSpider(scrapy.Spider):
                               meta={'btcturk_data': btcturk_data})
 
     def parse_btcturk_asset4(self, response):
+        """
+        Parses the fourth page of BtcTurk Pro markets and gathers market data.
+
+        Args:
+            response (scrapy.http.Response): The response object for the fourth page of BtcTurk Pro markets.
+
+        Yields:
+            scrapy.Request: A request object to follow the fifth page of BtcTurk Pro markets.
+        """
         btcturk_data = response.meta['btcturk_data']
         btcturk_markets = []
         table_btcturk = response.css('div.exchange-currencies-table div.table-wrp table.table tbody tr')
@@ -99,10 +159,17 @@ class DataScraperSpider(scrapy.Spider):
         yield response.follow(btcturk_assets_page5, callback=self.parse_btcturk_asset5,
                               meta={'btcturk_data': btcturk_data})
 
-
     def parse_btcturk_asset5(self, response):
-        btcturk_data = response.meta['btcturk_data']
+        """
+        Parses the fifth page of BtcTurk Pro markets and gathers market data.
 
+        Args:
+            response (scrapy.http.Response): The response object for the fifth page of BtcTurk Pro markets.
+
+        Yields:
+            scrapy.Request: A request object to follow the Binance exchange URL.
+        """
+        btcturk_data = response.meta['btcturk_data']
         btcturk_markets = []
         table_btcturk = response.css('div.exchange-currencies-table div.table-wrp table.table tbody tr')
         for row in table_btcturk:
@@ -122,10 +189,17 @@ class DataScraperSpider(scrapy.Spider):
 
         yield {'btcturk': btcturk_data}
 
-
     def parse_binance(self, response):
-        btcturk_data = response.meta['btcturk_data']
+        """
+        Parses the main page of Binance exchange to gather overall statistics.
 
+        Args:
+            response (scrapy.http.Response): The response object for the Binance exchange URL.
+
+        Yields:
+            scrapy.Request: A request object to follow the first page of Binance markets.
+        """
+        btcturk_data = response.meta['btcturk_data']
         binance_statics = response.css('div.overall-stats span.stats-value::text').getall()
 
         binance_data = {
@@ -143,10 +217,17 @@ class DataScraperSpider(scrapy.Spider):
                               meta={'binance_data': binance_data, 'btcturk_data': btcturk_data})
 
     def parse_binance_asset1(self, response):
+        """
+        Parses the first page of Binance markets and gathers market data.
+
+        Args:
+            response (scrapy.http.Response): The response object for the first page of Binance markets.
+
+        Yields:
+            scrapy.Request: A request object to follow the second page of Binance markets.
+        """
         btcturk_data = response.meta['btcturk_data']
         binance_data = response.meta['binance_data']
-
-
         binance_markets = []
         table_binance = response.css('div.exchange-currencies-table div.table-wrp table.table tbody tr')
         for row in table_binance:
@@ -165,10 +246,17 @@ class DataScraperSpider(scrapy.Spider):
                               meta={'binance_data': binance_data, 'btcturk_data': btcturk_data})
 
     def parse_binance_asset2(self, response):
+        """
+        Parses the second page of Binance markets and gathers market data.
+
+        Args:
+            response (scrapy.http.Response): The response object for the second page of Binance markets.
+
+        Yields:
+            scrapy.Request: A request object to follow the third page of Binance markets.
+        """
         btcturk_data = response.meta['btcturk_data']
         binance_data = response.meta['binance_data']
-
-
         binance_markets = []
         table_binance = response.css('div.exchange-currencies-table div.table-wrp table.table tbody tr')
         for row in table_binance:
@@ -182,15 +270,22 @@ class DataScraperSpider(scrapy.Spider):
 
         binance_data['markets'].extend(binance_markets)
 
-        btcturk_assets_page3 = 'https://www.bitdegree.org/top-crypto-exchanges/binance-tr/markets?page=3#all-markets'
-        yield response.follow(btcturk_assets_page3, callback=self.parse_binance_asset3,
+        binance_assets_page3 = 'https://www.bitdegree.org/top-crypto-exchanges/binance-tr/markets?page=3#all-markets'
+        yield response.follow(binance_assets_page3, callback=self.parse_binance_asset3,
                               meta={'binance_data': binance_data, 'btcturk_data': btcturk_data})
 
     def parse_binance_asset3(self, response):
+        """
+        Parses the third page of Binance markets and gathers market data.
+
+        Args:
+            response (scrapy.http.Response): The response object for the third page of Binance markets.
+
+        Yields:
+            scrapy.Request: A request object to follow the fourth page of Binance markets.
+        """
         btcturk_data = response.meta['btcturk_data']
         binance_data = response.meta['binance_data']
-
-
         binance_markets = []
         table_binance = response.css('div.exchange-currencies-table div.table-wrp table.table tbody tr')
         for row in table_binance:
@@ -204,15 +299,22 @@ class DataScraperSpider(scrapy.Spider):
 
         binance_data['markets'].extend(binance_markets)
 
-        btcturk_assets_page4 = 'https://www.bitdegree.org/top-crypto-exchanges/binance-tr/markets?page=4#all-markets'
-        yield response.follow(btcturk_assets_page4, callback=self.parse_binance_asset4,
+        binance_assets_page4 = 'https://www.bitdegree.org/top-crypto-exchanges/binance-tr/markets?page=4#all-markets'
+        yield response.follow(binance_assets_page4, callback=self.parse_binance_asset4,
                               meta={'binance_data': binance_data, 'btcturk_data': btcturk_data})
 
     def parse_binance_asset4(self, response):
+        """
+        Parses the fourth page of Binance markets and gathers market data.
+
+        Args:
+            response (scrapy.http.Response): The response object for the fourth page of Binance markets.
+
+        Yields:
+            scrapy.Request: A request object to follow the Paribu exchange URL.
+        """
         btcturk_data = response.meta['btcturk_data']
         binance_data = response.meta['binance_data']
-
-
         binance_markets = []
         table_binance = response.css('div.exchange-currencies-table div.table-wrp table.table tbody tr')
         for row in table_binance:
@@ -233,10 +335,17 @@ class DataScraperSpider(scrapy.Spider):
         yield {'binance': binance_data}
 
     def parse_paribu(self, response):
+        """
+        Parses the main page of Paribu exchange to gather overall statistics.
+
+        Args:
+            response (scrapy.http.Response): The response object for the Paribu exchange URL.
+
+        Yields:
+            scrapy.Request: A request object to follow the first page of Paribu markets.
+        """
         btcturk_data = response.meta['btcturk_data']
         binance_data = response.meta['binance_data']
-
-
         paribu_statics = response.css('div.overall-stats span.stats-value::text').getall()
 
         paribu_data = {
@@ -254,12 +363,18 @@ class DataScraperSpider(scrapy.Spider):
                               meta={'binance_data': binance_data, 'btcturk_data': btcturk_data, 'paribu_data': paribu_data})
 
     def parse_paribu_asset1(self, response):
+        """
+        Parses the first page of Paribu markets and gathers market data.
+
+        Args:
+            response (scrapy.http.Response): The response object for the first page of Paribu markets.
+
+        Yields:
+            scrapy.Request: A request object to follow the second page of Paribu markets.
+        """
         btcturk_data = response.meta['btcturk_data']
         binance_data = response.meta['binance_data']
         paribu_data = response.meta['paribu_data']
-
-
-
         paribu_markets = []
         table_paribu = response.css('div.exchange-currencies-table div.table-wrp table.table tbody tr')
         for row in table_paribu:
@@ -277,14 +392,19 @@ class DataScraperSpider(scrapy.Spider):
         yield response.follow(paribu_assets_page2, callback=self.parse_paribu_asset2,
                               meta={'binance_data': binance_data, 'btcturk_data': btcturk_data, 'paribu_data': paribu_data})
 
-
     def parse_paribu_asset2(self, response):
+        """
+        Parses the second page of Paribu markets and gathers market data.
+
+        Args:
+            response (scrapy.http.Response): The response object for the second page of Paribu markets.
+
+        Yields:
+            scrapy.Request: A request object to follow the third page of Paribu markets.
+        """
         btcturk_data = response.meta['btcturk_data']
         binance_data = response.meta['binance_data']
         paribu_data = response.meta['paribu_data']
-
-
-
         paribu_markets = []
         table_paribu = response.css('div.exchange-currencies-table div.table-wrp table.table tbody tr')
         for row in table_paribu:
@@ -302,14 +422,19 @@ class DataScraperSpider(scrapy.Spider):
         yield response.follow(paribu_assets_page3, callback=self.parse_paribu_asset3,
                               meta={'binance_data': binance_data, 'btcturk_data': btcturk_data, 'paribu_data': paribu_data})
 
-
     def parse_paribu_asset3(self, response):
+        """
+        Parses the third page of Paribu markets and gathers market data.
+
+        Args:
+            response (scrapy.http.Response): The response object for the third page of Paribu markets.
+
+        Yields:
+            scrapy.Request: A request object to follow the fourth page of Paribu markets.
+        """
         btcturk_data = response.meta['btcturk_data']
         binance_data = response.meta['binance_data']
         paribu_data = response.meta['paribu_data']
-
-
-
         paribu_markets = []
         table_paribu = response.css('div.exchange-currencies-table div.table-wrp table.table tbody tr')
         for row in table_paribu:
@@ -329,10 +454,18 @@ class DataScraperSpider(scrapy.Spider):
 
 
     def parse_paribu_asset4(self, response):
+        """
+        Parses the fourth page of Paribu markets and gathers market data.
+
+        Args:
+            response (scrapy.http.Response): The response object for the fourth page of Paribu markets.
+
+        Yields:
+            dict: A dictionary containing the gathered data for Paribu.
+        """
         btcturk_data = response.meta['btcturk_data']
         binance_data = response.meta['binance_data']
         paribu_data = response.meta['paribu_data']
-
         paribu_markets = []
         table_paribu = response.css('div.exchange-currencies-table div.table-wrp table.table tbody tr')
         for row in table_paribu:
