@@ -70,7 +70,7 @@ This Project consists of 3 folders:
 2. ***data_analysis***:
 After extracting the data, we copy data.json to the Data data_analysis folder for further cleaning and analysis. The `DataProcessing.ipynb` Jupyter Notebook contains steps for processing the data and creating visualizations with pandas, matplotlib, and seaborn libraries, helping us to better understand our data.
 
-2. ***report***: This folder includes the ultimate visualization of our data in Data Story.pdf. It provides valuable insights into the status of leading cryptocurrency exchanges, market trends, website metrics, and more, aiding in making informed decisions. You can Downalod the final PDF file [here](https://github.com/user-attachments/files/16198328/Main.Presentation.pptx).
+2. ***report***: This folder includes the ultimate visualization of our data in Data Story.pdf. It provides valuable insights into the status of leading cryptocurrency exchanges, market trends, website metrics, and more, aiding in making informed decisions. You can Downalod the final PDF file [here](https://github.com/user-attachments/files/16198465/report.pdf).
 
 <a name="run"></a>
 # 3.  How To Run The Project
